@@ -7,12 +7,21 @@ function getComputerSelection(){
 function getRandomInt(min, max){
     return Math.floor(Math.random() * (max-min+1)) + min;
 }
-let userMove = "rock";
 
 let winner = "";
 let userPoints = 0;
 let computerPoints = 0;
+let userMove = "";
 function playRound(userMove){
+    userMove = window.prompt("Enter Rock, Paper Or Scissor: ");
+    //Error Handling
+    if(userMove === null){
+        console.log("Enter a Value !!");
+    }
+    else{
+        //Correcting input
+        userMove = userMove.toLowerCase();
+    }
     let computerMove = getComputerSelection();
     
     if(userMove === "rock"){
