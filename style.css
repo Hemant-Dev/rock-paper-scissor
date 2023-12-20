@@ -1,0 +1,51 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('./images/pexels-daniel-absi-680074.jpg');
+    background-size: cover;
+    /* background-repeat: no-repeat; */
+    background-position-x: -48px;
+}
+
+.gameWindow{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rps-button{
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    margin-top: 100px;
+}
+
+.rockBtn,
+.paperBtn,
+.scissorBtn{
+    text-align: center;
+    padding: 40px;
+    border-radius: 20px;
+}
+
+.score,
+.move,
+.winner{
+    font-family: 'Robot', Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 26px;
+    color: rgb(224, 224, 42);
+}
+
+.score,
+.winner{
+    color: #071614;
+}

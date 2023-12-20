@@ -72,7 +72,7 @@ function playRound(userMove, computerMove){
 
 }
 function isGameOver(){
-    return userPoints == 3 || computerPoints == 3;
+    return userPoints == 5 || computerPoints == 5;
 }
 //UI
 const rockBtn = document.querySelector('.rockBtn');
@@ -81,6 +81,7 @@ const scissorBtn = document.querySelector('.scissorBtn');
 const winnerDisplay = document.querySelector('.winner');
 const gameWindow = document.querySelector('.gameWindow');
 const scoreDisplay = document.querySelector('.score');
+const selectionDisplay = document.querySelector('.move');
 
 rockBtn.addEventListener('click', () => handleClick('rock'));
 paperBtn.addEventListener('click', () => handleClick('paper'));
@@ -118,11 +119,14 @@ function disableBtn(){
 }
 
 function showScore(userMove, computerMove, winner){
-    const roundMove = document.createElement('h2');
-    roundMove.textContent = `User Move: ${userMove.toUpperCase()} ***** Computer Move: ${computerMove.toUpperCase()} ***** Round Winner: ${winner}`;
-    const roundScore  = document.createElement('h2');
-    roundScore.textContent = `User Points: ${userPoints} && Computer Points: ${computerPoints}`;
-    scoreDisplay.appendChild(roundMove);
-    scoreDisplay.appendChild(roundScore);
+    updateScore();
+    const roundMove = document.createElement('p');
+    roundMove.textContent = `User Move: ${userMove.toUpperCase()} ***** Computer Move: 
+    ${computerMove.toUpperCase()} ***** Round Winner: ${winner}`;
+    selectionDisplay.appendChild(roundMove);
+
+}
+function updateScore(){
+    scoreDisplay.textContent = `User Points: ${userPoints}  Computer Points: ${computerPoints}`;
 }
 
