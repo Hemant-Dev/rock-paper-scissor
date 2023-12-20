@@ -11,10 +11,8 @@ function getRandomInt(min, max){
 let winner = "";
 let userPoints = 0;
 let computerPoints = 0;
-let userMove = "";
-
 //Playing Function
-function playRound(userMove){
+function playRound(userMove, computerMove){
     
     //Error Handling
     if(userMove === null){
@@ -24,7 +22,7 @@ function playRound(userMove){
         //Correcting input
         userMove = userMove.toLowerCase();
     }
-    let computerMove = getComputerSelection();
+
     
     if(userMove === "rock"){
         if(computerMove === "scissor"){
@@ -70,62 +68,61 @@ function playRound(userMove){
             points = 0;
         }
     }
-    // console.log("User Move: " + userMove + " Computer Move: " + computerMove);
-    // console.log("Winner : " + winner + " User Points: " + userPoints + " , Computer Points: " + computerPoints);
-
-    const winnerDiv = document.querySelector('div.winner');
-    const h2 = document.createElement('h2');
-    h2.textContent = `Winner: ${winner} ****** User Points: ${userPoints} ****** Computer Points: ${computerPoints}`;
-    winnerDiv.appendChild(h2);
-
-
-    //Deciding the winner of the match i.e first to 5 rounds
-    const matchWinner = document.createElement('h1');
-    if(userPoints == 3){
-        matchWinner.textContent = `Winner Of the Match is User!!`;
-    }else if(computerPoints == 3){
-        matchWinner.textContent = `Winner of the Match is Computer!!`;
-    }
-    winnerDiv.appendChild(matchWinner);
+    showScore(userMove, computerMove, winner);
 
 }
+function isGameOver(){
+    return userPoints == 3 || computerPoints == 3;
+}
+//UI
+const rockBtn = document.querySelector('.rockBtn');
+const paperBtn = document.querySelector('.paperBtn');
+const scissorBtn = document.querySelector('.scissorBtn');
+const winnerDisplay = document.querySelector('.winner');
+const gameWindow = document.querySelector('.gameWindow');
+const scoreDisplay = document.querySelector('.score');
 
+rockBtn.addEventListener('click', () => handleClick('rock'));
+paperBtn.addEventListener('click', () => handleClick('paper'));
+scissorBtn.addEventListener('click',() => handleClick('scissor'));
 
-//Rounds Played 
-// let winnerOfTheMatch = "";
-// function game(rounds){
-//     for(let round=0; round<rounds; round++){
-//         playRound(userMove);
-//     }
-//     if(userPoints > computerPoints)
-//         winnerOfTheMatch = "User";
-//     else if(userPoints < computerPoints)
-//         winnerOfTheMatch = "Computer";
-//     else    
-//         winnerOfTheMatch = "Draw";
+function handleClick(playerSelection){
+    //Before Selection
+    if(isGameOver()){
+        showWinner();
+        return;
+    }
 
-//     console.log("The Winner of the match is: " + winnerOfTheMatch + "!!!");
-// }
-// game(5);
+    const computerSelection = getComputerSelection();
+    playRound(playerSelection, computerSelection);
 
+    //After Selection check
+    if(isGameOver()){
+        showWinner();
+        return;
+    }
+}
 
-//Adding Event Listeners for each button and setting the user move as the value of button clicked 
-// and calling playRound func with it
+function showWinner(){
+    let gameWinner = userPoints > computerPoints ? 'User' : 'Computer';
+    const heading = document.createElement('h1');
+    heading.textContent = `Winner is ${gameWinner}`;
+    winnerDisplay.appendChild(heading);
+    disableBtn(); //Cannot Play further
+}
 
-const rock = document.querySelector('button.rock');
-const paper = document.querySelector('button.paper');
-const scissor = document.querySelector('button.scissor');
-//User Move Allocation
-rock.addEventListener('click', (e) => {
-    // console.log(e.target.value);
-    playRound(e.target.value);
-});
-paper.addEventListener('click', (e) => {
-    // console.log(e.target.value);
-    playRound(e.target.value);
-});
-scissor.addEventListener('click', (e) => {
-    // console.log(e.target.value);
-    playRound(e.target.value);
-});
+function disableBtn(){
+    rockBtn.disabled = true;
+    paperBtn.disabled = true;
+    scissorBtn.disabled = true;
+}
+
+function showScore(userMove, computerMove, winner){
+    const roundMove = document.createElement('h2');
+    roundMove.textContent = `User Move: ${userMove.toUpperCase()} ***** Computer Move: ${computerMove.toUpperCase()} ***** Round Winner: ${winner}`;
+    const roundScore  = document.createElement('h2');
+    roundScore.textContent = `User Points: ${userPoints} && Computer Points: ${computerPoints}`;
+    scoreDisplay.appendChild(roundMove);
+    scoreDisplay.appendChild(roundScore);
+}
 
